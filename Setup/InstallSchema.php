@@ -21,51 +21,7 @@ class InstallSchema implements InstallSchemaInterface
         $installer = $setup;
 
         $installer->startSetup();
-        $installer->getConnection()->addColumn(
-            $installer->getTable('quote'),
-            'ebizmarts_abandonedcart_counter',
-            [
-                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
-                'unsigned' => true,
-                'nullable' => false,
-                'default' => '0',
-                'comment' => 'Abandoned Cart Counter'
-            ]
-        );
-        $installer->getConnection()->addColumn(
-            $installer->getTable('quote'),
-            'ebizmarts_abandonedcart_flag',
-            [
-                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
-                'unsigned' => true,
-                'nullable' => false,
-                'default' => '0',
-                'comment' => 'Abandoned Cart Flag'
-            ]
-        );
-        $installer->getConnection()->addColumn(
-            $installer->getTable('quote'),
-            'ebizmarts_abandonedcart_token',
-            [
-                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                'length'    => 128,
-                'unsigned' => true,
-                'nullable' => false,
-                'default' => '0',
-                'comment' => 'Abandoned Cart Flag'
-            ]
-        );
-        $installer->getConnection()->addColumn(
-            $installer->getTable('sales_order'),
-            'ebizmarts_abandonedcart_flag',
-            [
-                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
-                'unsigned' => true,
-                'nullable' => false,
-                'default' => '0',
-                'comment' => 'Abandoned Cart Flag'
-            ]
-        );
+
         $table  = $installer->getConnection()
             ->newTable($installer->getTable('abandonedcart_popup'))
             ->addColumn(
@@ -96,6 +52,21 @@ class InstallSchema implements InstallSchemaInterface
                 ['nullable'=>true,'default'=>null],
                 'Popup Counter'
             )
+
+            ->addColumn(
+                'flag',
+                \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
+                10,
+                ['unsigned' => true, 'nullable'=>true,'default'=>0],
+                'Abandoned Cart Flag'
+            )
+            ->addColumn(
+                'token',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                10,
+                ['length'    => 128, 'unsigned' => true, 'nullable' => false, 'default' => '0'],
+                'Token'
+            )
             ->addColumn(
                 'processed',
                 \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
@@ -103,7 +74,15 @@ class InstallSchema implements InstallSchemaInterface
                 ['nullable'=>false,'default'=>'0'],
                 'Popup Processed'
             )
-            ->setComment('Sent mails via Mandrill');
+            ->addColumn(
+                'quote_id',
+                \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                10,
+                ['unsigned' => true, 'nullable'=>true,'default'=>0],
+                'Quote Id'
+            )
+            ->setComment('Sent mails');
+
         $installer->getConnection()->createTable($table);
 
         $installer->endSetup();

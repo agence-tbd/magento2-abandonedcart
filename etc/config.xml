@@ -15,7 +15,7 @@
         <abandonedcart>
             <general>
                 <max>2</max>
-                <subject1>Having trouble?</subject1>
+                <subject1>Having trouble with you cart?</subject1>
                 <subject2>Limited stock</subject2>
                 <subject3>Coupon Discount!</subject3>
                 <unit>1</unit>
@@ -23,7 +23,6 @@
                 <days2>1</days2>
                 <days3>2</days3>
                 <sendon>3</sendon>
-                <mandrill-tag>AbandonedCart</mandrill-tag>
                 <autologin>0</autologin>
                 <page>checkout/cart</page>
             </general>
@@ -35,7 +34,6 @@
                 <popup_width>410</popup_width>
                 <popup_cookie_time>1</popup_cookie_time>
                 <popup_insist>1</popup_insist>
-                <popup_coupon_mandrill_tag>popup_coupon</popup_coupon_mandrill_tag>
                 <popup_coupon_mail_subject>You won a coupon!</popup_coupon_mail_subject>
             </emailcatcher>
         </abandonedcart>

@@ -26,6 +26,13 @@ class Loadquote extends \Magento\Framework\App\Action\Action
      * @var \Magento\Framework\View\Result\PageFactory
      */
     protected $_resultPageFactory;
+
+    /**
+     * @var Quote
+     */
+    protected $_newQuote;
+
+
     /**
      * @var \Psr\Log\LoggerInterface
      */
@@ -41,6 +48,7 @@ class Loadquote extends \Magento\Framework\App\Action\Action
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Ebizmarts\AbandonedCart\Helper\Data $helper,
+        \Ebizmarts\AbandonedCart\Model\Sales\Quote $quote,
         \Psr\Log\LoggerInterface $logger
     )
     {
@@ -48,6 +56,9 @@ class Loadquote extends \Magento\Framework\App\Action\Action
         $this->_objectManager = $context->getObjectManager();
         $this->_helper = $helper;
         $this->_resultPageFactory = $resultPageFactory;
+
+        $this->_newQuote   = $quote;
+
         $this->_logger = $logger;
     }
     public function execute()
@@ -56,12 +67,15 @@ class Loadquote extends \Magento\Framework\App\Action\Action
         $quoteId = (int) $this->getRequest()->getParam('id', false);
         $this->_logger->info("quoteid $quoteId");
         if($quoteId) {
-            $quote = $this->_objectManager->create('\Magento\Quote\Model\Quote')->load($quoteId);
-            $storeId = $quote->getStoreId();
+            //$quote = $this->_objectManager->create('\Magento\Quote\Model\Quote')->load($quoteId);
+            $this->_newQuote->load($quoteId);
+
+
+            $storeId = $this->_newQuote->getStoreId();
             $url = $this->_helper->getConfig(\Ebizmarts\AbandonedCart\Model\Config::PAGE,$storeId);
             $this->_logger->info("url $url");
             $token = (int) $this->getRequest()->getParam('token', false);
-            if(!$token || $token != $quote->getEbizmartsAbandonedcartToken())
+            if(!$token || $token != $this->_newQuote->getEbizmartsAbandonedcartToken())
             {
                 $this->messageManager->addNotice("Invalid token");
                 $this->_redirect($url);
@@ -70,37 +84,36 @@ class Loadquote extends \Magento\Framework\App\Action\Action
                 $coupon = $this->getRequest()->getParam('coupon', false);
                 if($coupon)
                 {
-                    $quote->setCouponCode($coupon);
+                    $this->_newQuote->setCouponCode($coupon);
                 }
-                $quote->setEbizmartsAbandonedcartFlag(1);
-                $quote->save();
-                if(!$quote->getCustomerId())
+                $this->_newQuote->setEbizmartsAbandonedcartFlag(1);
+                $this->_newQuote->save();
+                if(!$this->_newQuote->getCustomerId())
                 {
-                    $this->_getCheckoutSession()->setQuoteId($quote->getId());
+                    $this->_getCheckoutSession()->setQuoteId($this->_newQuote->getId());
                 }
                 if($this->_helper->getConfig(\Ebizmarts\AbandonedCart\Model\Config::AUTOLOGIN,$storeId))
                 {
-                    if($quote->getCustomerId())
+                    if($this->_newQuote->getCustomerId())
                     {
                         $customerSession = $this->_getCustomerSession();
                         if(!$customerSession->isLoggedIn())
                         {
-                            $customerSession->loginById($quote->getCustomerId());
-
+                            $customerSession->loginById($this->_newQuote->getCustomerId());
                         }
                         $this->_redirect('customer/account');
                     }
                 }
                 $this->_redirect($url);
             }
-
         }
-
     }
+
     protected function _getCustomerSession()
     {
         return $this->_objectManager->get('Magento\Customer\Model\Session');
     }
+
     protected function _getCheckoutSession()
     {
         return $this->_objectManager->get('Magento\Checkout\Model\Session');

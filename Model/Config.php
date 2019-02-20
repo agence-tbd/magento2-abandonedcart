@@ -23,26 +23,10 @@ class Config
     const PAGE                      = 'abandonedcart/general/page';
     const AUTOLOGIN                 = "abandonedcart/general/autologin";
 
-    const MANDRILL_TAG              = 'abandonedcart/general/mandrill-tag';
     const CUSTOMER_GROUPS           = "abandonedcart/general/customer";
     const UNIT                      = "abandonedcart/general/unit";
     const SENDER                    = "abandonedcart/general/identity";
-    // AB TESTING
-    const AB_TESTING_ACTIVE         = 'abandonedcart/A_Btesting/active';
-    const ABCOUNTER                 = "abandonedcart/A_Btesting/abcounter";
-    const AB_TESTING_MANDRILL_SUFFIX= 'abandonedcart/A_Btesting/mandrill_suffix';
-    const AB_TESTING_FIRST_EMAIL    = 'abandonedcart/A_Btesting/template1';
-    const AB_TESTING_SECOND_EMAIL   = 'abandonedcart/A_Btesting/template2';
-    const AB_TESTING_THIRD_EMAIL    = 'abandonedcart/A_Btesting/template3';
-    const AB_TESTING_FOURTH_EMAIL   = 'abandonedcart/A_Btesting/template4';
-    const AB_TESTING_FIFTH_EMAIL    = 'abandonedcart/A_Btesting/template5';
-    const AB_TESTING_EMAIL_TEMPLATE = 'abandonedcart/A_Btesting/coupon_template';
-    const AB_TESTING_FIRST_SUBJECT  = "abandonedcart/A_Btesting/subject1";
-    const AB_TESTING_SECOND_SUBJECT = "abandonedcart/A_Btesting/subject2";
-    const AB_TESTING_THIRD_SUBJECT  = "abandonedcart/A_Btesting/subject3";
-    const AB_TESTING_FOURTH_SUBJECT = "abandonedcart/A_Btesting/subject4";
-    const AB_TESTING_FIFTH_SUBJECT  = "abandonedcart/A_Btesting/subject5";
-    const AB_TESTING_COUPON_SENDON  = "abandonedcart/A_Btesting/A_Btesting_sendon";
+
 
     const FIRST_EMAIL_TEMPLATE_XML_PATH     = 'abandonedcart/general/template1';
     const SECOND_EMAIL_TEMPLATE_XML_PATH    = 'abandonedcart/general/template2';
@@ -64,7 +48,6 @@ class Config
     const POPUP_COOKIE_TIME         = 'abandonedcart/emailcatcher/popup_cookie_time';
     const POPUP_INSIST              = 'abandonedcart/emailcatcher/popup_insist';
     const POPUP_CREATE_COUPON       = 'abandonedcart/emailcatcher/popup_coupon';
-    const POPUP_COUPON_MANDRILL_TAG = 'abandonedcart/emailcatcher/popup_coupon_mandrill_tag';
     const POPUP_COUPON_MAIL_SUBJECT = 'abandonedcart/emailcatcher/popup_coupon_mail_subject';
     const POPUP_COUPON_TEMPLATE_XML_PATH = 'abandonedcart/emailcatcher/popup_coupon_template';
     const POPUP_COUPON_AUTOMATIC    = 'abandonedcart/emailcatcher/popup_automatic';
