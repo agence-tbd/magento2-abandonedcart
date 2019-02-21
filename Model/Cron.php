@@ -337,7 +337,6 @@ class Cron
             $quote->setEbizmartsAbandonedcartToken($token);
             $quote->save();
 
-            break;
         }
 
     }
